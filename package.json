@@ -1,0 +1,29 @@
+{
+  "name": "typeorm-pglite",
+  "version": "0.1.0",
+  "description": "PGlite support for TypeORM",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "typeorm",
+    "pglite",
+    "postgres"
+  ],
+  "author": "Murli Prajapati",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.7.7",
+    "typescript": "^5.6.3",
+    "pg": "^8.13.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
+  },
+  "peerDependencies": {
+    "@electric-sql/pglite": ">= 0.2.12"
+  },
+  "files": [
+    "./dist"
+  ]
+}
