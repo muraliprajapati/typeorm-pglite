@@ -1,11 +1,14 @@
 # typeorm-pglite
 
-PGlite support for TypeORM.
+[PGlite](https://pglite.dev/) support for TypeORM.
 
 ## Installation
 
+PGlite is a `peerDependency` of `typeorm-pglite` so ensure you have it installed in your project.
+
 ```sh
-npm i typeorm-pglite
+npm install @electric-sql/pglite
+npm install typeorm-pglite
 ```
 
 ## Usage
