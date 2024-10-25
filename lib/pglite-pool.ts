@@ -55,7 +55,9 @@ export class PGlitePool extends EventEmitter {
       });
   }
 
-  async end() {
-    await PGliteInstance.close();
+  end(errorCallback: Function) {
+    PGliteInstance.close()
+      .then(() => errorCallback(null))
+      .catch((error) => errorCallback(error));
   }
 }
