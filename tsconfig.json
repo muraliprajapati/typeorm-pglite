@@ -12,10 +12,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": [
-    "lib/**/*.ts",
-    "test/**/*.ts",
-    "test/create-user-table.migration.js"
-  ],
+  "include": ["lib/**/*.ts"],
   "exclude": ["node_modules"]
 }
