@@ -13,4 +13,8 @@ export class Photo {
 
   @Column({ type: "int", default: 0 })
   views!: number;
+
+  // added boolean column to reproduce issue #4
+  @Column({ type: 'boolean', default: false })
+  isPublic!: boolean;
 }

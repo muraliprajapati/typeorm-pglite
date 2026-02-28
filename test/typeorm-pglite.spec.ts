@@ -56,4 +56,35 @@ describe("typeorm-pglite", () => {
 
     expect(results.length).toBe(1);
   });
+
+  it("should update boolean column using repository", async () => {
+    const photo = new Photo();
+    photo.name = "Bool update";
+    photo.isPublic = false;
+    await pgliteDb.manager.save(photo);
+
+    // this used to trigger the boolean serialization error in pglite
+    await pgliteDb.getRepository(Photo).update({ id: photo.id }, { isPublic: true });
+
+    const updated = await pgliteDb.manager.findOneBy(Photo, { id: photo.id });
+    expect(updated?.isPublic).toBe(true);
+  });
+
+  it("should update boolean column using query builder", async () => {
+    const photo = new Photo();
+    photo.name = "Bool qb update";
+    photo.isPublic = false;
+    await pgliteDb.manager.save(photo);
+
+    await pgliteDb
+      .getRepository(Photo)
+      .createQueryBuilder()
+      .update(Photo)
+      .set({ isPublic: true })
+      .where('id = :id', { id: photo.id })
+      .execute();
+
+    const updated = await pgliteDb.manager.findOneBy(Photo, { id: photo.id });
+    expect(updated?.isPublic).toBe(true);
+  });
 });

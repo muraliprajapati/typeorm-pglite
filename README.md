@@ -71,3 +71,26 @@ async function run() {
 
 run();
 ```
+
+### Boolean parameters and serialization
+
+To make the driver behave like PostgreSQL and avoid the error, a default boolean serializer is applied automatically when the driver is constructed. It converts any JS boolean (or common equivalents such as `1`/`0` or `"true"`/`"false"`) into the SQL literals `TRUE`/`FALSE`.
+
+**Override the serializer:** If you need the legacy `'t'`/`'f'` behaviour or want to have custom serializer, you can pass a custom `serializers` map to `PGliteDriver` – the default is merged with your options.
+
+```ts
+import { PGliteDriver } from "typeorm-pglite";
+import { types } from "@electric-sql/pglite";
+
+const driver = new PGliteDriver({
+  serializers: {
+    [types.BOOL]: (val) => {
+      if (val === true) return "t";
+      if (val === false) return "f";
+      return val;
+    },
+    // 
+    [types.NUMERIC]: (value) => value.toString(),
+  },
+}).driver;
+```
