@@ -1,6 +1,6 @@
 {
   "name": "typeorm-pglite",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "PGlite support for TypeORM",
   "main": "dist/index.js",
   "scripts": {
