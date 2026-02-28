@@ -39,8 +39,20 @@ export class PGlitePool extends EventEmitter {
       params = undefined;
     }
 
-    return pgliteInstance
-      .query(sqlQuery, params)
+    const hasParams =
+      params !== undefined && Array.isArray(params) && params.length > 0;
+
+    const queryPromise = hasParams
+      ? pgliteInstance.query(sqlQuery, params)
+      : // exec returns an array of results (one item per statement). TypeORM
+        // expects the last result in the case of multi-statement strings,
+        // so mirror the behaviour of the previous implementation by returning
+        // the last element or an empty placeholder.
+        pgliteInstance.exec(sqlQuery).then((results) =>
+          results[results.length - 1] || { rows: [] }
+        );
+
+    return queryPromise
       .then((results) => {
         if (cb) {
           cb(null, results);

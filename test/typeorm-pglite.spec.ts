@@ -34,6 +34,14 @@ describe("typeorm-pglite", () => {
     expect(results[0].count).toBe(1);
   });
 
+  it("should execute multi-statement queries without parameters", async () => {
+    // the second SELECT's result is returned by our wrapper (see
+    // pglite-pool.ts).  prior to the fix, this would error out in pglite
+    // because the prepared statement would contain two commands.
+    const results = await pgliteDb.query("select 1 as a; select 2 as a");
+    expect(results[0].a).toBe(2);
+  });
+
   it("should sync entities", async () => {
     const results = await pgliteDb.query('select count(*) from "photo"');
     expect(results[0].count).toBe(0);
